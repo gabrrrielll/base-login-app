@@ -100,7 +100,7 @@ export class UserLogin extends LitElement {
   // Method to handle the login action
   private login() {
     if (this.username && this.password) {
-      authService.login({ name: this.username, password: this.password });
+      authService.login({ username: this.username, password: this.password });
       console.log('Login successful', this.username, this.password);
     } else {
       alert('Please enter both username and password.');
