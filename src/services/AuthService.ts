@@ -1,26 +1,15 @@
+// Import the SingletonManager
+import SingletonManager from './singleton-manager.js';
+
 // Singleton class for managing user authentication.
 // Provides methods for logging in, logging out, and accessing user details.
 export class AuthService {
-
-  // Declare a private static property to hold the instance of the AuthService class
-  private static instance: AuthService;
 
   // Initialize a private property to track the authentication status, initially set to false
   private _isAuthenticated: boolean = false;
 
   // Initialize a private property to store user details, initially set to null
   private _userDetails: { name: string; email: string } | null = null;
-
-  // Define a public static method to retrieve the instance of the AuthService class
-  public static getInstance(): AuthService {
-    // Check if an instance of AuthService already exists
-    if (!AuthService.instance) {
-      // If not, create a new instance and assign it to the static property
-      AuthService.instance = new AuthService();
-    }
-    // Return the instance of AuthService
-    return AuthService.instance;
-  }
 
   // Define a public method to handle user login
   public login(userDetails: { name: string; email: string }) {
@@ -51,5 +40,5 @@ export class AuthService {
   }
 }
 
-// Create an instance of AuthService using the getInstance method and export it as a constant
-export const authService = AuthService.getInstance();
+// Use SingletonManager to get the singleton instance of AuthService
+export const authService = SingletonManager.getInstance(AuthService);
