@@ -15,7 +15,9 @@
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"web-dev-server\""
   },
   "dependencies": {
-    "lit": "^3.1.4"
+    "@lion/ui": "^0.7.6",
+    "lit": "^3.1.4",
+    "singleton-manager": "^1.7.0"
   },
   "devDependencies": {
     "@custom-elements-manifest/analyzer": "^0.10.3",
