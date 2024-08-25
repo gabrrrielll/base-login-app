@@ -47,10 +47,19 @@ export class AuthService extends EventTarget {
     return this._isAuthenticated;
   }
 
-  // Define a public getter to retrieve the stored user details
-  public get userDetails(): { username: string; password: string } | null {
-    // Return the stored user details
-    return this._userDetails;
+  // Define a public getter to retrieve user details
+  public get userData() {
+    if (this._isAuthenticated) {
+      // Return the hardcoded user details if the authentication status is true
+      return {
+        name: 'John Doe',
+        email: 'john.doe@example.com',
+        phone: '+1 555-555-5555'
+      };
+    } else {
+      return null;
+    }
+
   }
 }
 
