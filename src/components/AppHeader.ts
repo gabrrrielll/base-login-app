@@ -1,9 +1,12 @@
 import { LitElement, html, css } from 'lit'; // Importing necessary LitElement modules
-import { customElement } from 'lit/decorators.js'; // Importing decorator to define custom elements
-import { authService } from '../services/AuthService.js'; // Importing the authService for user authentication
+import { property, customElement } from 'lit/decorators.js'; // Importing decorator to define custom elements
 
+const logo = new URL('../../../assets/open-wc-logo.svg', import.meta.url).href;
 @customElement('app-header') // Defining the custom element named 'app-header'
+
 export class AppHeader extends LitElement {
+  @property({ type: String }) header = 'Base Login App';
+
   // Defining styles for the component
   static styles = css`
     :host {
@@ -13,74 +16,42 @@ export class AppHeader extends LitElement {
       padding: 10px; /* Padding around the header content */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Shadow for depth effect */
     }
+
     .header {
       display: flex;
       justify-content: space-between; /* Space items equally apart */
       align-items: center; /* Vertically center items */
-      width: calc(100vw - 80px); /* Subtract 20px from 100vw; */
-      padding: 10px 30px /* Fill the width of the parent element */
     }
+
+    .title {
+      display: flex;
+      justify-content: center; /* Space items equally apart */
+      align-items: center; /* Vertically center items */
+      width: calc(100vw - 270px); /* Subtract 80px from 100vw; */
+      padding-right: 110px;
+    }
+
+    .logo {
+      width: 110px; /* Width of the logo image */
+      padding-left: 30px; /* Add some margin to the right of the image */
+    }
+
     .logo img {
-      height: 40px; /* Height of the logo image */
-    }
-    .user-icon {
-      position: relative; /* Position for the dropdown */
-      cursor: pointer; /* Change cursor to pointer on hover */
-    }
-    .dropdown {
-      display: none; /* Initially hide dropdown */
-      position: absolute; /* Absolute position relative to the user icon */
-      right: 0;
-      background-color: white; /* Background of the dropdown */
-      color: black; /* Text color of the dropdown */
-      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Shadow for dropdown */
-      z-index: 1; /* Ensure dropdown is on top */
-    }
-    .dropdown a {
-      padding: 8px 16px; /* Padding inside the dropdown links */
-      display: block; /* Display as block to fill the width */
-      text-decoration: none; /* Remove underline from links */
-      color: black; /* Text color of links */
-    }
-    .dropdown a:hover {
-      background-color: #ddd; /* Background color on hover */
-    }
-    .user-icon:hover .dropdown {
-      display: block; /* Show dropdown on hover */
+      width: 100px; /* Width of the logo image */
+      height: 100px; /* Height of the logo image */
     }
   `;
-
-  // Method to handle login
-  private login() {
-    authService.login({ name: 'John Doe', email: 'johndoe@example.com' }); // Logging in with dummy data
-    this.requestUpdate(); // Requesting a UI update
-  }
-
-  // Method to handle logout
-  private logout() {
-    authService.logout(); // Logging out the user
-    this.requestUpdate(); // Requesting a UI update
-  }
 
   // Rendering the component
   render() {
     return html`
       <div class="header">
-        <div class="logo">
-          <img src="https://via.placeholder.com/150" alt="Logo" /> <!-- Placeholder for the logo -->
-        </div>
-        <div class="user-icon">
-          <img src="https://via.placeholder.com/40" alt="User Icon" /> <!-- Placeholder for the user icon -->
-          <div class="dropdown">
-            ${authService.isAuthenticated
-      ? html`<a href="#" @click="${this.logout}">Logout</a> <!-- Show logout if authenticated -->`
-    : html`<a href="#" @click="${this.login}">Login</a>`} <!-- Show login if not authenticated -->
-          </div>
-        </div>
+        <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
+        <div class="title"><h2>${this.header}</h2></div>
+      </div>
       </div>
     `;
   }
-
 }
 
 // Declaring the custom element globally
