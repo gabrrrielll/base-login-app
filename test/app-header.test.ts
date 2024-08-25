@@ -20,7 +20,7 @@ describe('AppHeader', () => {
 
     // Check if the logo is rendered with the correct src
     const logoImg = el.shadowRoot && el.shadowRoot?.querySelector('.logo img');
-    // await expect(logoImg).to.exist;
+    logoImg && expect(logoImg).to.exist;
     logoImg && await expect(logoImg?.getAttribute('src')).to.equal(new URL('../../../assets/open-wc-logo.svg', import.meta.url).href);
   });
 
