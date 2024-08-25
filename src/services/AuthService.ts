@@ -1,22 +1,34 @@
-// Import the SingletonManager
 import SingletonManager from './singleton-manager.js';
 
 // Singleton class for managing user authentication.
 // Provides methods for logging in, logging out, and accessing user details.
-export class AuthService {
+export class AuthService extends EventTarget {
 
   // Initialize a private property to track the authentication status, initially set to false
   private _isAuthenticated: boolean = false;
 
   // Initialize a private property to store user details, initially set to null
-  private _userDetails: { name: string; email: string } | null = null;
+  private _userDetails: { username: string; password: string } | null = null;
 
   // Define a public method to handle user login
-  public login(userDetails: { name: string; email: string }) {
-    // Set the authentication status to true
-    this._isAuthenticated = true;
-    // Store the provided user details
-    this._userDetails = userDetails;
+  public login(userDetails: { username: string; password: string }) {
+
+    // Hardcoded credentials for comparison
+    const validUsername = 'username';
+    const validPassword = 'password';
+
+    // Verify the provided credentials
+    if (userDetails.username === validUsername && userDetails.password === validPassword) {
+      // Set the authentication status to true
+      this._isAuthenticated = true;
+      // Store the provided user details
+      this._userDetails = userDetails;
+      // Dispatch an event to notify about the change in authentication status
+      this.dispatchEvent(new Event('auth-changed'));
+    } else {
+      // Dispatch an event to notify about the failed authentication
+      this.dispatchEvent(new Event('auth-failed'));
+    }
   }
 
   // Define a public method to handle user logout
@@ -25,6 +37,8 @@ export class AuthService {
     this._isAuthenticated = false;
     // Clear the stored user details
     this._userDetails = null;
+    // Dispatch an event to notify about the change in authentication status
+    this.dispatchEvent(new Event('auth-changed'));
   }
 
   // Define a public getter to retrieve the authentication status
@@ -34,7 +48,7 @@ export class AuthService {
   }
 
   // Define a public getter to retrieve the stored user details
-  public get userDetails(): { name: string; email: string } | null {
+  public get userDetails(): { username: string; password: string } | null {
     // Return the stored user details
     return this._userDetails;
   }

@@ -22,16 +22,9 @@ export class UserLogin extends LitElement {
     }
 
     h2 {
-      margin-bottom: 20px;
+      margin-bottom: 40px;
       font-size: 1.5em;
       color: #333;
-    }
-
-    label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      color: #555;
     }
 
     input[type='text'],
@@ -53,6 +46,7 @@ export class UserLogin extends LitElement {
       border-radius: 4px;
       font-size: 1em;
       cursor: pointer;
+      margin-top: 10px;
     }
 
     button:hover {
@@ -64,6 +58,28 @@ export class UserLogin extends LitElement {
       margin-bottom: 20px;
     }
   `;
+
+  // When the element is first connected to the DOM, listen for the auth-failed event
+  connectedCallback() {
+    super.connectedCallback();
+    authService.addEventListener('auth-failed', this.handleAuthFailed.bind(this));
+  }
+
+  // Handling input changes for both username and password
+  private handleInputChange(e: Event) {
+    const target = e.target as HTMLInputElement;
+    this[target.name as 'username' | 'password'] = target.value;
+  }
+
+  // Method to handle the login action
+  private login() {
+    authService.login({ username: this.username, password: this.password });
+  }
+
+  // Method to handle failed login attempts
+  private handleAuthFailed() {
+    alert('Invalid username or password. Please try again.');
+  }
 
   // Rendering the login form
   render() {
@@ -89,22 +105,6 @@ export class UserLogin extends LitElement {
 
       <button @click=${this.login}>Login</button>
     `;
-  }
-
-  // Handling input changes for both username and password
-  private handleInputChange(e: Event) {
-    const target = e.target as HTMLInputElement;
-    this[target.name as 'username' | 'password'] = target.value;
-  }
-
-  // Method to handle the login action
-  private login() {
-    if (this.username && this.password) {
-      authService.login({ username: this.username, password: this.password });
-      console.log('Login successful', this.username, this.password);
-    } else {
-      alert('Please enter both username and password.');
-    }
   }
 }
 
