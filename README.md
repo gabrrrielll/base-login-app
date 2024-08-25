@@ -1,30 +1,18 @@
-<p align="center">
-  <img width="200" src="https://open-wc.org/hero.png"></img>
-</p>
+# Base Login App
 
-## Open-wc Starter App
+![Build Status](https://img.shields.io/badge/build-passing-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue)
 
-[![Built with open-wc recommendations](https://img.shields.io/badge/built%20with-open--wc-blue.svg)](https://github.com/open-wc)
+Base Login App is a modern web component-based application that provides a simple, yet elegant login interface. The project is built using the latest web technologies, including Lit, TypeScript, and Rollup.
 
-## Quickstart
 
-To get started:
+## Overview
 
-```sh
-npm init @open-wc
-# requires node 10 & npm 6 or higher
-```
+The Base Login App is designed as a front-end only application focusing on creating a login page using web components. It serves as a foundational template for web applications that require user authentication interfaces, complete with a login, logout, and user details view.
 
-## Scripts
+## Features
 
-- `start` runs your app for development, reloading on file changes
-- `start:build` runs your app after it has been built using the build command
-- `build` builds your app and outputs it in your `dist` directory
-- `test` runs your test suite with Web Test Runner
-- `lint` runs the linter for your project
-
-## Tooling configs
-
-For most of the tools, the configuration is in the `package.json` to reduce the amount of files in your project.
-
-If you customize the configuration a lot, you can consider moving them to individual files.
+- **Web Components**: The app uses modern Web Components with Lit for component architecture.
+- **TypeScript**: All components are built using TypeScript to ensure type safety.
+- **Rollup**: The project uses Rollup as a module bundler to optimize and minify the output for production.
+- **Responsive Design**: The app is fully responsive, adapting to different screen sizes.
+- **Testing**: Unit and integration tests are included using Open WC and Chai.
