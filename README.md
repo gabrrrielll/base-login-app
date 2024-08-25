@@ -16,3 +16,14 @@ The Base Login App is designed as a front-end only application focusing on creat
 - **Rollup**: The project uses Rollup as a module bundler to optimize and minify the output for production.
 - **Responsive Design**: The app is fully responsive, adapting to different screen sizes.
 - **Testing**: Unit and integration tests are included using Open WC and Chai.
+
+## Demo
+
+The project is published on Netlify:
+
+[https://main--base-login-app.netlify.app/](https://main--base-login-app.netlify.app/)
+
+**For testing purpose use:**
+
+*  **Username**: username
+*  **Password**:  password
