@@ -1,14 +1,14 @@
 import { LitElement, html, css } from 'lit';
-import { property, customElement } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import './components/AppHeader.js';
 import './components/AppFooter.js';
+import './components/UserLogin.js';
+import './components/UserDetails.js';
 
-
-const logo = new URL('../../assets/open-wc-logo.svg', import.meta.url).href;
+import { authService } from './services/AuthService.js';
 
 @customElement('login-app')
 export class LoginApp extends LitElement {
-  @property({ type: String }) header = 'My app';
 
   static styles = css`
     :host {
@@ -24,49 +24,35 @@ export class LoginApp extends LitElement {
     }
 
     main {
+      display: flex;
+      flex-direction: column;
       flex-grow: 1;
-    }
-
-    .logo {
-      margin-top: 36px;
-      animation: app-logo-spin infinite 20s linear;
-    }
-
-    @keyframes app-logo-spin {
-      from {
-        transform: rotate(0deg);
-      }
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .app-footer {
-      font-size: calc(12px + 0.5vmin);
       align-items: center;
     }
-
-    .app-footer a {
-      margin-left: 5px;
-    }
   `;
+
+  // When the element is first connected to the DOM, listen for the auth-changed event
+  connectedCallback() {
+    super.connectedCallback();
+    authService.addEventListener('auth-changed', this.handleAuthChange.bind(this));
+  }
+
+  // Handle login success by triggering a UI update
+  private handleAuthChange() {
+    this.requestUpdate(); // Request a UI update when auth status changes
+  }
 
   render() {
     return html`
       <app-header></app-header>
       <main>
-        <div class="logo"><img alt="open-wc logo" src=${logo} /></div>
-        <h1>${this.header}</h1>
-
-        <p>Edit <code>src/LoginApp.ts</code> and save to reload.</p>
-        <a
-          class="app-link"
-          href="https://open-wc.org/guides/developing-components/code-examples"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Code examples
-        </a>
+        <!-- Conditionally render user-login or user-details based on authentication status -->
+        ${authService.isAuthenticated
+          ? html`
+            <user-details></user-details> <!-- Show user details if authenticated -->`
+          : html`
+            <user-login @login-success=${this.handleAuthChange}></user-login>`}
+        <!-- Show login form if not authenticated -->
       </main>
       <app-footer></app-footer>
     `;
